@@ -1,0 +1,26 @@
+{
+  "overview": "WebStore is a premium marketplace for buying and selling websites, featuring an ultra-modern dark theme with neon accents, glassmorphism effects, and world-class interactive UI.",
+  "features": [
+    "Glassmorphism navbar with animated scroll effects",
+    "Animated hero section with parallax gradients and floating cards",
+    "Scroll-triggered animated statistics counters",
+    "Interactive service and feature cards with hover glow effects",
+    "Customer reviews carousel with smooth auto-scroll",
+    "FAQ accordion with smooth expand/collapse animations",
+    "Pricing comparison table with highlighted tiers",
+    "Premium dark footer with social links and hover animations",
+    "Browse marketplace with glass filter panel and animated listing cards",
+    "Seller and Buyer dashboards with glass panels and glowing borders",
+    "All existing marketplace features preserved"
+  ],
+  "category": "marketplace",
+  "tags": [
+    "marketplace",
+    "website-trading",
+    "glassmorphism",
+    "dark-theme",
+    "premium-ui",
+    "animated"
+  ],
+  "last_updated": "2026-06-04T05:21:45.094Z"
+}

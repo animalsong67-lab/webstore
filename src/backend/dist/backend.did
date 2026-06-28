@@ -1,0 +1,365 @@
+type WishlistEntry = 
+ record {
+   listingId: nat;
+   savedAt: Timestamp;
+   snapshotNiche: text;
+   snapshotPrice: nat;
+   snapshotTitle: text;
+   snapshotUrl: text;
+ };
+type WebsiteBuilderMockup = 
+ record {
+   accentColor: text;
+   ctaSubtext: text;
+   ctaText: text;
+   headline: text;
+   primaryColor: text;
+   secondaryColor: text;
+   sections: vec MockupSection;
+   subheadline: text;
+ };
+type VerifiedMetrics = 
+ record {
+   fetchedAt: int;
+   monthlyRevenue: float64;
+   revenueTrend: RevenueTrend;
+   sourceBreakdowns: vec SourceBreakdown;
+   trafficVolume: nat;
+ };
+type VerifiedBadge = 
+ record {
+   listingId: nat;
+   monthlyRevenue: float64;
+   sourceBreakdowns: vec SourceBreakdown;
+   trafficVolume: nat;
+   trend: RevenueTrend;
+ };
+type VerificationStatus = 
+ variant {
+   pending;
+   rejected: text;
+   unverified;
+   verified;
+ };
+type VerificationRequest = 
+ record {
+   adminNote: opt text;
+   claimedMonthlyRevenue: float64;
+   claimedTrafficVolume: nat;
+   id: nat;
+   listingId: nat;
+   reviewedAt: opt int;
+   sellerId: text;
+   status: VerificationStatus;
+   submittedAt: int;
+   verifiedMetrics: opt VerifiedMetrics;
+ };
+type ValuationResult = 
+ record {
+   baseMultiple: nat;
+   daBonus: int;
+   estimatedMax: nat;
+   estimatedMin: nat;
+   growthPotential: nat;
+   riskScore: nat;
+   seoScore: nat;
+   trafficBonus: int;
+   trendAdjustment: int;
+ };
+type ValuationInput = 
+ record {
+   domainAgeYears: nat;
+   domainAuthority: nat;
+   monthlyRevenue: nat;
+   monthlyTraffic: nat;
+   revenueTrend: variant {
+                   down;
+                   flat;
+                   up;
+                 };
+   revenueType: variant {
+                  ads;
+                  affiliate;
+                  product;
+                  recurring;
+                };
+   trafficDiversification: variant {
+                             diverse;
+                             mixed;
+                             single;
+                           };
+ };
+type TrustScore = 
+ record {
+   accountAgeDays: nat;
+   avgRating: nat;
+   completionRate: nat;
+   hasRedFlags: bool;
+   isVerified: bool;
+   responseTimeHours: nat;
+   score: nat;
+   tier: variant {
+           caution;
+           established;
+           new;
+           trusted;
+         };
+   transactionCount: nat;
+ };
+type Timestamp = int;
+type SourceBreakdown = 
+ record {
+   monthlyRevenue: float64;
+   source: CredentialSource;
+   trafficVolume: nat;
+ };
+type SellerSubmissionInput = 
+ record {
+   askingPrice: nat;
+   contactEmail: text;
+   description: text;
+   monthlyRevenue: nat;
+   monthlyTraffic: nat;
+   niche: text;
+   platform: text;
+   url: text;
+ };
+type SellerReviewInput = 
+ record {
+   comment: text;
+   listingId: text;
+   rating: nat;
+   reviewerName: text;
+   sellerId: text;
+ };
+type SellerReview = 
+ record {
+   comment: text;
+   id: text;
+   listingId: text;
+   rating: nat;
+   reviewerName: text;
+   timestamp: Timestamp;
+ };
+type SearchQuery = 
+ record {
+   cmsType: opt text;
+   countryTraffic: opt text;
+   maxRevenue: opt nat;
+   maxTraffic: opt nat;
+   minAgeYears: opt nat;
+   minRevenue: opt nat;
+   minSeoScore: opt nat;
+   minTraffic: opt nat;
+   monetizationType: opt text;
+   naturalLanguage: opt text;
+   niche: opt text;
+   sortBy: variant {
+             bestMatch;
+             highestRating;
+             newest;
+             priceAsc;
+             priceDesc;
+           };
+ };
+type RevenueTrend = 
+ variant {
+   down;
+   flat;
+   up;
+ };
+type PurchaseRecord = 
+ record {
+   buyer: principal;
+   completedAt: Timestamp;
+   id: nat;
+   listingId: nat;
+   listingTitle: text;
+   pricePaid: nat;
+   seller: text;
+   transferStatus: text;
+ };
+type PerformanceReportInput = record {listingId: text;};
+type PerformanceReport = 
+ record {
+   listingId: text;
+   mobileScore: nat;
+   overallGrade: text;
+   reportedAt: int;
+   securityScore: nat;
+   seoScore: nat;
+   spamScore: nat;
+   speedScore: nat;
+ };
+type NotificationType = 
+ variant {
+   auctionWon: record {
+                 finalPrice: nat;
+                 listingId: nat;
+               };
+   outbid: record {
+             listingId: nat;
+             newHighestBid: nat;
+           };
+   priceDrop: record {
+                listingId: nat;
+                newPrice: nat;
+                oldPrice: nat;
+              };
+   purchaseConfirmed: record {
+                        amount: nat;
+                        listingId: nat;
+                      };
+   transferUpdate: record {
+                     listingId: nat;
+                     message: text;
+                   };
+ };
+type MockupSection = 
+ record {
+   body: text;
+   title: text;
+ };
+type ListingStatus = 
+ variant {
+   active;
+   pending;
+   sold;
+ };
+type ListingFilter = 
+ record {
+   maxPrice: opt nat;
+   niche: opt text;
+   platform: opt text;
+ };
+type Listing = 
+ record {
+   askingPrice: nat;
+   description: text;
+   id: nat;
+   listedDate: Timestamp;
+   monthlyRevenue: nat;
+   monthlyTraffic: nat;
+   niche: text;
+   platform: text;
+   sellerName: text;
+   status: ListingStatus;
+   title: text;
+   url: text;
+ };
+type CustomOrderInput = 
+ record {
+   budget: text;
+   contactEmail: text;
+   contactName: text;
+   description: text;
+   requirements: text;
+   timeline: text;
+   websiteType: text;
+ };
+type CustomOrder = 
+ record {
+   budget: text;
+   contactEmail: text;
+   contactName: text;
+   description: text;
+   id: nat;
+   requirements: text;
+   sellerNotes: opt text;
+   status: text;
+   submittedAt: Timestamp;
+   submittedBy: principal;
+   timeline: text;
+   websiteType: text;
+ };
+type CredentialToken = 
+ record {
+   refreshToken: opt text;
+   source: CredentialSource;
+   token: text;
+ };
+type CredentialSource = 
+ variant {
+   googleAdSense;
+   googleAnalytics;
+   paypal;
+   stripe;
+ };
+type ContactMessageInput = 
+ record {
+   email: text;
+   message: text;
+   name: text;
+   subject: text;
+ };
+type ChatMessage = 
+ record {
+   content: text;
+   role: text;
+ };
+type BuyerNotificationView = 
+ record {
+   createdAt: Timestamp;
+   id: nat;
+   notifType: NotificationType;
+   read: bool;
+ };
+type BidEntry = 
+ record {
+   auctionEnded: bool;
+   bidAmount: nat;
+   isHighestBidder: bool;
+   listingId: nat;
+   listingTitle: text;
+   placedAt: Timestamp;
+   won: bool;
+ };
+service : {
+  addToWishlist: (listingId: nat) -> (bool);
+  adminApproveVerification: (requestId: nat) -> ();
+  adminListPendingVerifications: () -> (vec VerificationRequest);
+  adminRejectVerification: (requestId: nat, reason: text) -> ();
+  askAI: (message: text, conversationHistory: vec ChatMessage) -> (text);
+  calculateValuation: (input: ValuationInput) -> (ValuationResult) query;
+  checkWishlist: (listingId: nat) -> (bool) query;
+  filterListings: (filter: ListingFilter) -> (vec Listing) query;
+  generatePerformanceReport: (input: PerformanceReportInput) ->
+   (PerformanceReport);
+  generateWebsiteBuilderMockup: (niche: text, description: text) ->
+   (WebsiteBuilderMockup);
+  getBuyerBids: () -> (vec BidEntry) query;
+  getBuyerCustomOrders: () -> (vec CustomOrder) query;
+  getBuyerNotifications: () -> (vec BuyerNotificationView) query;
+  getBuyerPurchases: () -> (vec PurchaseRecord) query;
+  getCustomOrders: () -> (vec CustomOrder) query;
+  getListing: (id: nat) -> (opt Listing) query;
+  getListings: () -> (vec Listing) query;
+  getRecommendations: (searchQuery: SearchQuery) -> (vec Listing) query;
+  getReviews: (listingId: text) -> (vec SellerReview) query;
+  getSellerListings: (sellerPrincipal: principal) -> (vec Listing) query;
+  getSellerTrustScore: (sellerId: text) -> (TrustScore) query;
+  getVerificationStatus: (listingId: nat) -> (VerificationStatus) query;
+  getVerifiedBadge: (listingId: nat) -> (opt VerifiedBadge) query;
+  getWishlist: () -> (vec WishlistEntry) query;
+  markNotificationRead: (notifId: nat) -> (bool);
+  refreshVerificationMetrics: (listingId: nat) -> ();
+  removeFromWishlist: (listingId: nat) -> (bool);
+  smartSearch: (searchQuery: SearchQuery) -> (vec Listing) query;
+  submitContact: (input: ContactMessageInput) -> ();
+  submitCustomOrder: (input: CustomOrderInput) -> (nat);
+  submitReview: (review: SellerReviewInput) ->
+   (variant {
+      err: text;
+      ok: text;
+    });
+  submitVerificationRequest: (listingId: nat, claimedMonthlyRevenue: 
+   float64, claimedTrafficVolume: nat, credentialTokens:
+   vec CredentialToken) -> (nat);
+  submitWebsite: (input: SellerSubmissionInput) -> ();
+  updateCustomOrderStatus: (orderId: text, status: text, notes: opt text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  websiteTypes: () -> (vec text) query;
+}

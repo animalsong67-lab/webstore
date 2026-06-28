@@ -1,0 +1,242 @@
+// Version: 1.0.0
+type BidEntry__507243743 =
+  {
+    auctionEnded : Bool;
+    bidAmount : Nat;
+    isHighestBidder : Bool;
+    listingId : Nat;
+    listingTitle : Text;
+    placedAt : Timestamp__154463766;
+    won : Bool
+  };
+type BidEntry__74133272 = BidEntry__507243743;
+type BuyerNotification__566125311 = BuyerNotification__761093968;
+type BuyerNotification__761093968 =
+  {
+    buyer : Principal;
+    createdAt : Timestamp__154463766;
+    id : Nat;
+    notifType : NotificationType__270794847;
+    var read : Bool
+  };
+type ContactMessage__84138439 =
+  {
+    email : Text;
+    id : Nat;
+    message : Text;
+    name : Text;
+    subject : Text;
+    submittedAt : Timestamp__306786231
+  };
+type CredentialSource__997292301 =
+  {#googleAdSense; #googleAnalytics; #paypal; #stripe};
+type CredentialToken__134832929 =
+  {refreshToken : ?Text; source : CredentialSource__997292301; token : Text};
+type CustomOrder__61490619 =
+  {
+    budget : Text;
+    contactEmail : Text;
+    contactName : Text;
+    description : Text;
+    id : Nat;
+    requirements : Text;
+    sellerNotes : ?Text;
+    status : Text;
+    submittedAt : Timestamp__158827791;
+    submittedBy : Principal;
+    timeline : Text;
+    websiteType : Text
+  };
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type List__529703492<T> =
+  {
+    var blockIndex : Nat__1040412405;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__1040412405
+  };
+type List__560604548<T> = List__529703492<T>;
+type ListingStatus__271393237 = {#active; #pending; #sold};
+type ListingStatus__58036956 = ListingStatus__271393237;
+type Listing__798123527 =
+  {
+    askingPrice : Nat;
+    description : Text;
+    id : Nat;
+    listedDate : Timestamp__708849965;
+    monthlyRevenue : Nat;
+    monthlyTraffic : Nat;
+    niche : Text;
+    platform : Text;
+    sellerName : Text;
+    status : ListingStatus__58036956;
+    title : Text;
+    url : Text
+  };
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type NotificationType__270794847 =
+  {
+    #auctionWon : {finalPrice : Nat; listingId : Nat};
+    #outbid : {listingId : Nat; newHighestBid : Nat};
+    #priceDrop : {listingId : Nat; newPrice : Nat; oldPrice : Nat};
+    #purchaseConfirmed : {amount : Nat; listingId : Nat};
+    #transferUpdate : {listingId : Nat; message : Text}
+  };
+type PurchaseRecord__100747354 = PurchaseRecord__586147175;
+type PurchaseRecord__586147175 =
+  {
+    buyer : Principal;
+    completedAt : Timestamp__154463766;
+    id : Nat;
+    listingId : Nat;
+    listingTitle : Text;
+    pricePaid : Nat;
+    seller : Text;
+    transferStatus : Text
+  };
+type RevenueTrend__233354018 = {#down; #flat; #up};
+type SellerReview__883404770 =
+  {
+    comment : Text;
+    id : Text;
+    listingId : Text;
+    rating : Nat;
+    reviewerName : Text;
+    timestamp : Timestamp__144921642
+  };
+type SellerSubmission__269292289 =
+  {
+    askingPrice : Nat;
+    contactEmail : Text;
+    description : Text;
+    monthlyRevenue : Nat;
+    monthlyTraffic : Nat;
+    niche : Text;
+    platform : Text;
+    submittedAt : Timestamp__708849965;
+    url : Text
+  };
+type SourceBreakdown__36301973 =
+  {
+    monthlyRevenue : Float;
+    source : CredentialSource__997292301;
+    trafficVolume : Nat
+  };
+type Timestamp__144921642 = Timestamp__301639476;
+type Timestamp__154463766 = Timestamp__301639476;
+type Timestamp__158827791 = Timestamp__301639476;
+type Timestamp__301639476 = Int;
+type Timestamp__306786231 = Timestamp__301639476;
+type Timestamp__708849965 = Timestamp__301639476;
+type VerificationRequest__843266808 =
+  {
+    adminNote : ?Text;
+    claimedMonthlyRevenue : Float;
+    claimedTrafficVolume : Nat;
+    id : Nat;
+    listingId : Nat;
+    reviewedAt : ?Int;
+    sellerId : Text;
+    status : VerificationStatus__146775441;
+    submittedAt : Int;
+    verifiedMetrics : ?VerifiedMetrics__890411760
+  };
+type VerificationStatus__146775441 =
+  {#pending; #rejected : Text; #unverified; #verified};
+type VerifiedMetrics__890411760 =
+  {
+    fetchedAt : Int;
+    monthlyRevenue : Float;
+    revenueTrend : RevenueTrend__233354018;
+    sourceBreakdowns : [SourceBreakdown__36301973];
+    trafficVolume : Nat
+  };
+type WishlistEntry__390291566 = WishlistEntry__429980498;
+type WishlistEntry__429980498 =
+  {
+    listingId : Nat;
+    savedAt : Timestamp__154463766;
+    snapshotNiche : Text;
+    snapshotPrice : Nat;
+    snapshotTitle : Text;
+    snapshotUrl : Text
+  };
+actor {
+  stable buyerBidLog :
+    {
+      var root :
+        Node__1000929467<Principal, List__560604548<BidEntry__74133272>>;
+      var size : Nat__1040412405
+    };
+  stable contactMessages :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?ContactMessage__84138439]];
+      var elementIndex : Nat__1040412405
+    };
+  stable customOrders :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?CustomOrder__61490619]];
+      var elementIndex : Nat__1040412405
+    };
+  stable listings :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Listing__798123527]];
+      var elementIndex : Nat__1040412405
+    };
+  stable nextContactId : Nat;
+  stable var nextListingId : Nat;
+  stable nextVerificationRequestId : {var value : Nat};
+  stable notifMap :
+    {
+      var root :
+        Node__1000929467<Principal,
+                          List__560604548<BuyerNotification__566125311>>;
+      var size : Nat__1040412405
+    };
+  stable purchases :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?PurchaseRecord__100747354]];
+      var elementIndex : Nat__1040412405
+    };
+  stable reviews :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?SellerReview__883404770]];
+      var elementIndex : Nat__1040412405
+    };
+  stable var seeded : Bool;
+  stable sellerSubmissions :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?SellerSubmission__269292289]];
+      var elementIndex : Nat__1040412405
+    };
+  stable verificationCredentials :
+    {
+      var root : Node__1000929467<Nat, [CredentialToken__134832929]>;
+      var size : Nat__1040412405
+    };
+  stable verificationRequests :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?VerificationRequest__843266808]];
+      var elementIndex : Nat__1040412405
+    };
+  stable wishlistMap :
+    {
+      var root :
+        Node__1000929467<Principal, List__560604548<WishlistEntry__390291566>>;
+      var size : Nat__1040412405
+    };
+  stable wishlistNotifState : {var nextNotifId : Nat}
+};
